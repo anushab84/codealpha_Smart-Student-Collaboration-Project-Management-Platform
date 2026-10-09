@@ -1,6 +1,6 @@
 # CollabHub
 
-CollabHub is a student collaboration and project management platform. The app has implementations for the Phase 1-14 feature set, Phase 15 security hardening and tests, and Phase 16-17 deployment/documentation preparation. Phase 18 final real-database, provider, browser, and deployment verification remains incomplete because those integrations were not configured here.
+CollabHub is a student collaboration and project management platform. The app has implementations for the Phase 1-14 feature set, Phase 15 security hardening and tests, and Phase 16-17 deployment/documentation preparation. Registration, login, project creation, and task create/update/list workflows have been smoke-tested against the configured MongoDB. Full browser and feature-by-feature verification, optional provider setup, and live deployment remain incomplete.
 
 ## Stack
 
@@ -77,7 +77,7 @@ The phase-specific route summaries below document comments/files, chat, AI, meet
 
 ## Verification status
 
-The client production build passed with route-level lazy loading. Backend syntax checks passed across 53 JavaScript files. Automated tests are configured and run with `npm test` in `server`. Database-backed API workflows and authenticated upload/download still need manual verification against an isolated test MongoDB instance.
+The client production build passed with route-level lazy loading. Backend syntax checks passed across 53 JavaScript files, and all 13 server tests passed. Registration, login, project creation, task creation/update, and task listing passed a temporary API smoke test against the configured MongoDB; the temporary user, project, and task were removed afterward. Authenticated file transfer and the other feature-specific database workflows still need testing.
 
 ## Phase 6 project chat
 
@@ -151,7 +151,7 @@ For local containers, build with `docker build -t collabhub-server ./server` and
 
 | Feature area | Status |
 | --- | --- |
-| Registration, login, profiles, projects, teams, tasks, Kanban | Present from the existing Phase 1-4 implementation; not end-to-end verified in this environment |
+| Registration, login, project creation, task create/update/list | API workflow verified against configured MongoDB; browser flow, profiles, teams, and Kanban UI still need verification |
 | Task comments and private project files | Implemented; client build and backend syntax checked; database workflow not exercised |
 | Project chat and notifications | Implemented; syntax/build checked; live multi-user delivery not exercised against MongoDB |
 | Social feed, global search, calendar, analytics | Implemented; build/syntax checked; actual database result correctness not exercised |
@@ -167,7 +167,7 @@ GitHub checklist: configure branch protection; keep `.env`/provider credentials 
 
 ## Known limitations and next improvements
 
-- Database-backed workflows and the Phase 1-4 flows need a real isolated MongoDB end-to-end run.
+- Authenticated file transfer and remaining feature-specific database workflows need end-to-end testing against an isolated test database.
 - Project files currently use private local disk; add an object-storage adapter before multi-instance or production file sharing.
 - Socket rooms and API rate limits use in-memory state; horizontal scaling needs a shared Socket.io adapter and distributed rate limiter.
 - Deadline reminders need a reliable scheduler; user following, direct messaging, and video call tests are not included.
